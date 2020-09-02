@@ -5,7 +5,11 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MJPEG.Core", "MJPEG.Core\MJPEG.Core.csproj", "{0F965D10-EC25-4CBB-86CD-059E3E84C799}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrameSaver", "FrameSaver\FrameSaver.csproj", "{3B1D94FE-CDA6-43E9-83ED-BF2B66648B39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrameSaver", "FrameSaver\FrameSaver.csproj", "{3B1D94FE-CDA6-43E9-83ED-BF2B66648B39}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimplePlayer", "SimplePlayer\SimplePlayer.csproj", "{47285C0D-3BBA-4FF3-AA79-FD2A296E7421}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimplePlayerIoC", "SimplePlayerIoC\SimplePlayerIoC.csproj", "{733CF7CB-3755-4284-9247-D4CC9A908C1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{3B1D94FE-CDA6-43E9-83ED-BF2B66648B39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B1D94FE-CDA6-43E9-83ED-BF2B66648B39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B1D94FE-CDA6-43E9-83ED-BF2B66648B39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47285C0D-3BBA-4FF3-AA79-FD2A296E7421}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47285C0D-3BBA-4FF3-AA79-FD2A296E7421}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47285C0D-3BBA-4FF3-AA79-FD2A296E7421}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47285C0D-3BBA-4FF3-AA79-FD2A296E7421}.Release|Any CPU.Build.0 = Release|Any CPU
+		{733CF7CB-3755-4284-9247-D4CC9A908C1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{733CF7CB-3755-4284-9247-D4CC9A908C1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{733CF7CB-3755-4284-9247-D4CC9A908C1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{733CF7CB-3755-4284-9247-D4CC9A908C1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
