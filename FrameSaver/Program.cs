@@ -16,30 +16,44 @@ namespace FrameSaver
                 Directory.Delete(FramesDir, true);
             }
 
-            if (!Directory.Exists("Frames"))
+            if (!Directory.Exists(FramesDir))
             {
-                Directory.CreateDirectory("Frames");
+                Directory.CreateDirectory(FramesDir);
             }
 
             var decoder = new StreamDecoder("http://83.128.74.78:8083/mjpg/video.mjpg");
 
+            decoder.OnFrameReceived += Decoder_OnFrameReceived;
             decoder.StartDecodingAsync();
 
-            while (true)
+            Console.ReadLine();
+
+            //while (true)
+            //{
+            //    Thread.Sleep(1000);
+
+            //    var frame = decoder.GetLastFrame();
+
+            //    if (frame == null) continue;
+
+            //    Console.WriteLine($"Frame received at: {DateTime.Now}");
+
+            //    using (FileStream fs = new FileStream($"Frames\\{DateTime.Now:HH-mm-ss}.jpeg", FileMode.CreateNew))
+            //    {
+            //        fs.Write(frame, 0, frame.Length);
+            //        fs.Flush();
+            //    }
+            //}
+        }
+
+        private static void Decoder_OnFrameReceived(FrameReceivedEventArgs e)
+        {
+            Console.WriteLine($"Frame received at: {DateTime.Now}");
+
+            using (FileStream fs = new FileStream($"{FramesDir}\\{DateTime.Now:HH-mm-ss}.jpeg", FileMode.CreateNew))
             {
-                Thread.Sleep(1000);
-
-                var frame = decoder.GetLastFrame();
-
-                if (frame == null) continue;
-
-                Console.WriteLine($"Frame received at: {DateTime.Now}");
-
-                using (FileStream fs = new FileStream($"Frames\\{DateTime.Now:HH-mm-ss}.jpeg", FileMode.CreateNew))
-                {
-                    fs.Write(frame, 0, frame.Length);
-                    fs.Flush();
-                }
+                fs.Write(e.Frame, 0, e.Frame.Length);
+                fs.Flush();
             }
         }
     }

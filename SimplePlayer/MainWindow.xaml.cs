@@ -35,24 +35,31 @@ namespace SimplePlayer
         private void Window_Initialized(object sender, EventArgs e)
         {
             _decoder.StartDecodingAsync();
+            _decoder.OnFrameReceived += _decoder_OnFrameReceived;
 
-            _worker.DoWork += _worker_DoWork;
-            _worker.RunWorkerAsync();
+            // Not used anymore
+            //_worker.DoWork += _worker_DoWork;
+            //_worker.RunWorkerAsync();
         }
 
-        private void _worker_DoWork(object sender, DoWorkEventArgs e)
+        private void _decoder_OnFrameReceived(FrameReceivedEventArgs e)
         {
-            while (true)
-            {
-                // TODO temporary
-                Thread.Sleep(1000); 
-
-                var frame = _decoder.GetLastFrame();
-
-                if (frame == null) continue;
-
-                Dispatcher.Invoke(() => player.Source = frame.ToImageSource());
-            }
+            Dispatcher.Invoke(() => player.Source = e.Frame.ToImageSource());
         }
+
+        //private void _worker_DoWork(object sender, DoWorkEventArgs e)
+        //{
+        //    while (true)
+        //    {
+        //        // TODO temporary
+        //        Thread.Sleep(1000); 
+
+        //        var frame = _decoder.GetLastFrame();
+
+        //        if (frame == null) continue;
+
+        //        Dispatcher.Invoke(() => player.Source = frame.ToImageSource());
+        //    }
+        //}
     }
 }

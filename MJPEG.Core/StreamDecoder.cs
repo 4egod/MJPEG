@@ -30,6 +30,10 @@ namespace MJPEG.Core
 
         public byte[] GetLastFrame() => _lastFrame;
 
+        public delegate void FrameHandler(FrameReceivedEventArgs e);
+
+        public event FrameHandler OnFrameReceived;
+
         private async Task DoWork()
         {
             while (true)
@@ -56,11 +60,18 @@ namespace MJPEG.Core
                             {
                                 _lastFrame = content;
                             }
+
+                            OnFrameReceived?.Invoke(new FrameReceivedEventArgs()
+                            {
+                                Frame = content
+                            });
                         }
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    Debug.WriteLine(e.Message);
+                    Debug.WriteLine(e.StackTrace);
                 }
             }
         }
