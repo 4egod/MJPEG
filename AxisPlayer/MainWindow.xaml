@@ -4,9 +4,33 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AxisPlayer"
+        xmlns:controls="clr-namespace:AxisPlayer.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="AxisPlayer" MinHeight="500" MinWidth="800" WindowStartupLocation="CenterScreen">
+    <Grid Background="Black">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="33*"/>
+            <ColumnDefinition Width="33*"/>
+            <ColumnDefinition Width="33*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
 
+        <controls:Player Grid.Row="0" Grid.Column="0"/>
+        <controls:Player Grid.Row="0" Grid.Column="1"/>
+        <controls:Player Grid.Row="0" Grid.Column="2"/>
+
+        <controls:Player Grid.Row="1" Grid.Column="0"/>
+        <controls:Player Grid.Row="1" Grid.Column="1"/>
+        <controls:Player Grid.Row="1" Grid.Column="2"/>
+
+        <Border BorderThickness="1" BorderBrush="Gray" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"/>
+        <Button Margin="0" Content="◀️" VerticalContentAlignment="Center" Foreground="Yellow" Background="Black" FontSize="20" Grid.Row="2" Grid.Column="0" Style="{DynamicResource AxisPlayerButtonStyle}"/>
+        <Border BorderThickness="1" BorderBrush="Gray" Grid.Row="2" Grid.Column="1" />
+        <TextBlock Text="{Binding Path=Page}" Foreground="Yellow" FontSize="20" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Button Margin="0" Content="▶️" VerticalContentAlignment="Center" Foreground="Yellow" Background="Black" FontSize="20" Grid.Row="2" Grid.Column="2" Style="{DynamicResource AxisPlayerButtonStyle}"/>
     </Grid>
 </Window>
