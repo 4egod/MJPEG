@@ -1,0 +1,27 @@
+﻿<reactiveui:ReactiveUserControl
+    x:Class="AxisPlayer.Views.PlayerView"
+    xmlns:vm="clr-namespace:AxisPlayer.ViewModels;assembly=AxisPlayer.Core"
+    x:TypeArguments="vm:PlayerViewModel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="clr-namespace:AxisPlayer.Views"
+    xmlns:controls="clr-namespace:AxisPlayer.Controls"
+    xmlns:Converters="clr-namespace:AxisPlayer.Converters"
+    xmlns:reactiveui="http://reactiveui.net"
+    mc:Ignorable="d" 
+    d:DesignHeight="600" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <Converters:BytesToImageSourceConverter x:Key="BytesToImageSourceConverter"/>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Border BorderThickness="1" BorderBrush="Gray"/>
+        <controls:Smile Grid.Row="0" VerticalAlignment="Center"/>
+        <Image Source="{Binding Frame, Converter={StaticResource BytesToImageSourceConverter}, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:PlayerView}}}" Stretch="Fill" Grid.Row="0"/>
+        <TextBlock Margin="0,0,0,5" Text="{Binding Location, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:PlayerView}}}" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="White" FontWeight="Bold" Grid.Row="0"/>
+    </Grid>
+    
+</reactiveui:ReactiveUserControl>

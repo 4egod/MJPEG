@@ -1,6 +1,9 @@
-﻿using System;
+﻿using AxisPlayer.ViewModels;
+using ReactiveUI;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Reactive.Disposables;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,16 +15,29 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AxisPlayer.Controls
+namespace AxisPlayer.Views
 {
     /// <summary>
     /// Interaction logic for Player.xaml
     /// </summary>
-    public partial class Player : UserControl
+    public partial class PlayerView : ReactiveUserControl<PlayerViewModel>
     {
-        public Player()
+        public PlayerView()
         {
             InitializeComponent();
+
+            this.WhenActivated(disposableRegistration =>
+            {
+                this.OneWayBind(ViewModel,
+                    viewModel => viewModel.Location,
+                    view => view.Location)
+                    .DisposeWith(disposableRegistration);
+
+                this.OneWayBind(ViewModel,
+                    viewModel => viewModel.Frame,
+                    view => view.Frame)
+                    .DisposeWith(disposableRegistration);
+            });
         }
 
         [Category("General")]
@@ -33,10 +49,10 @@ namespace AxisPlayer.Controls
 
         // Using a DependencyProperty as the backing store for Frame.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty FrameProperty =
-            DependencyProperty.Register("Frame", typeof(byte[]), typeof(Player), new PropertyMetadata(null));
+            DependencyProperty.Register("Frame", typeof(byte[]), typeof(PlayerView), new PropertyMetadata(null));
 
 
-
+        [Category("General")]
         public string Location
         {
             get { return (string)GetValue(LocationProperty); }
@@ -45,7 +61,7 @@ namespace AxisPlayer.Controls
 
         // Using a DependencyProperty as the backing store for Location.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty LocationProperty =
-            DependencyProperty.Register("Location", typeof(string), typeof(Player), new PropertyMetadata(null));
+            DependencyProperty.Register("Location", typeof(string), typeof(PlayerView), new PropertyMetadata(null));
 
 
     }

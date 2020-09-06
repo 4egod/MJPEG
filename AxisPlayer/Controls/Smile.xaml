@@ -1,17 +1,22 @@
-﻿<UserControl x:Class="AxisPlayer.Controls.Smile"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:AxisPlayer.Controls"
-             mc:Ignorable="d" 
-             d:DesignHeight="120" d:DesignWidth="150" MinWidth="150" MinHeight="120">
+﻿<UserControl 
+    x:Class="AxisPlayer.Controls.Smile"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:local="clr-namespace:AxisPlayer.Controls"
+    mc:Ignorable="d" 
+    d:DesignHeight="120" d:DesignWidth="150" MinWidth="150" MinHeight="120">
+    
     <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="60*"/>
             <RowDefinition Height="40*"/>
         </Grid.RowDefinitions>
+        
         <TextBlock Text="😐" FontSize="60" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="0" Foreground="Yellow" />
         <TextBlock Text="no signal" FontSize="35" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Foreground="Yellow" />
     </Grid>
+    
 </UserControl>
