@@ -5,9 +5,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MJPEG.Core
+namespace MJPEG
 {
-    public class StreamDecoder
+    public class StreamDecoder : IStreamDecoder
     {
         private string _uri;
 
@@ -17,20 +17,34 @@ namespace MJPEG.Core
 
         private object _locker = new object();
 
-        public StreamDecoder(string uri)
+        private bool _updateUri;
+
+        public StreamDecoder()
         {
-            _uri = uri;
             _client = new HttpClient();
         }
 
-        public void StartDecodingAsync()
+        public void StartDecodingAsync(string uri)
         {
-            Task.Factory.StartNew(DoWork, TaskCreationOptions.LongRunning);
+            if (_uri == null)
+            {
+                _uri = uri;
+
+                Task.Factory.StartNew(DoWork, TaskCreationOptions.LongRunning);
+            }
+            else
+            {
+                if (uri != _uri)
+                {
+                    _uri = uri;
+                    _updateUri = true;
+                }
+            }
         }
 
         public byte[] GetLastFrame() => _lastFrame;
 
-        public delegate void FrameHandler(FrameReceivedEventArgs e);
+        public delegate void FrameHandler(object sender, FrameReceivedEventArgs e);
 
         public event FrameHandler OnFrameReceived;
 
@@ -38,6 +52,12 @@ namespace MJPEG.Core
         {
             while (true)
             {
+                if (_uri == null)
+                {
+                    await Task.Delay(1000);
+                    continue;
+                }
+
                 try
                 {
                     using (var stream = await _client.GetStreamAsync(_uri).ConfigureAwait(false))
@@ -52,7 +72,7 @@ namespace MJPEG.Core
 
                             if (content == null) break;
 
-                            if (!CheckRawImage(content)) break;
+                            //if (!CheckRawImage(content)) break;
 
                             // valid frame received
 
@@ -61,7 +81,13 @@ namespace MJPEG.Core
                                 _lastFrame = content;
                             }
 
-                            OnFrameReceived?.Invoke(new FrameReceivedEventArgs()
+                            if (_updateUri)
+                            {
+                                _updateUri = false;
+                                break;
+                            }
+
+                            OnFrameReceived?.Invoke(this, new FrameReceivedEventArgs()
                             {
                                 Frame = content
                             });

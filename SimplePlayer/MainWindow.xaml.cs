@@ -14,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MJPEG.Core;
+using MJPEG;
 
 namespace SimplePlayer
 {
@@ -25,8 +25,8 @@ namespace SimplePlayer
     {
         private BackgroundWorker _worker = new BackgroundWorker();
 
-        private StreamDecoder _decoder = new StreamDecoder("http://83.128.74.78:8083/mjpg/video.mjpg");
-
+        private StreamDecoder _decoder = new StreamDecoder();
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -34,7 +34,7 @@ namespace SimplePlayer
 
         private void Window_Initialized(object sender, EventArgs e)
         {
-            _decoder.StartDecodingAsync();
+            _decoder.StartDecodingAsync("http://83.128.74.78:8083/mjpg/video.mjpg");
             _decoder.OnFrameReceived += _decoder_OnFrameReceived;
 
             // Not used anymore
@@ -42,7 +42,7 @@ namespace SimplePlayer
             //_worker.RunWorkerAsync();
         }
 
-        private void _decoder_OnFrameReceived(FrameReceivedEventArgs e)
+        private void _decoder_OnFrameReceived(object sender, FrameReceivedEventArgs e)
         {
             Dispatcher.Invoke(() => player.Source = e.Frame.ToImageSource());
         }

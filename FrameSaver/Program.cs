@@ -1,4 +1,4 @@
-﻿using MJPEG.Core;
+﻿using MJPEG;
 using System;
 using System.IO;
 using System.Threading;
@@ -21,10 +21,10 @@ namespace FrameSaver
                 Directory.CreateDirectory(FramesDir);
             }
 
-            var decoder = new StreamDecoder("http://83.128.74.78:8083/mjpg/video.mjpg");
-
-            decoder.OnFrameReceived += Decoder_OnFrameReceived;
-            decoder.StartDecodingAsync();
+            var decoder = new StreamDecoder();
+        
+            decoder.OnFrameReceived += Decoder_OnFrameReceived; 
+            decoder.StartDecodingAsync("http://83.128.74.78:8083/mjpg/video.mjpg");
 
             Console.ReadLine();
 
@@ -46,7 +46,7 @@ namespace FrameSaver
             //}
         }
 
-        private static void Decoder_OnFrameReceived(FrameReceivedEventArgs e)
+        private static void Decoder_OnFrameReceived(object sender, FrameReceivedEventArgs e)
         {
             Console.WriteLine($"Frame received at: {DateTime.Now}");
 

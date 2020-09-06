@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MJPEG.Core\MJPEG.Core.csproj" />
+    <ProjectReference Include="..\MJPEG\MJPEG.csproj" />
   </ItemGroup>
 
 </Project>

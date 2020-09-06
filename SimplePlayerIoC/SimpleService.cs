@@ -1,4 +1,4 @@
-﻿using MJPEG.Core;
+﻿using MJPEG;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,12 +11,11 @@ namespace SimplePlayerIoC
 
         public SimpleService()
         {
-            _decoder = new StreamDecoder("http://83.128.74.78:8083/mjpg/video.mjpg");
-            //_decoder.StartDecodingAsync();
+            _decoder = new StreamDecoder();
         }
 
         public byte[] GetLastFrame() => _decoder.GetLastFrame();
 
-        public void StartDecoding() => _decoder.StartDecodingAsync();
+        public void StartDecoding() => _decoder.StartDecodingAsync("http://83.128.74.78:8083/mjpg/video.mjpg");
     }
 }

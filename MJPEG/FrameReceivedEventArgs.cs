@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MJPEG.Core
+namespace MJPEG
 {
     public class FrameReceivedEventArgs : EventArgs
     {
