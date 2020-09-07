@@ -96,7 +96,7 @@ namespace MJPEG
             }
         }
 
-        private byte[] SliceStream(Stream stream, byte[] beginPattern, byte[] endPattern)
+        internal byte[] SliceStream(Stream stream, byte[] beginPattern, byte[] endPattern)
         {
             int offset = 0;
             bool beginCathed = false;
@@ -151,7 +151,7 @@ namespace MJPEG
             }
         }
 
-        private int GetContentLength(Stream stream)
+        internal int GetContentLength(Stream stream)
         {
             int res = 0;
 
@@ -184,7 +184,7 @@ namespace MJPEG
             return res;
         }
 
-        private byte[] GetContent(Stream stream, int contentLength)
+        internal byte[] GetContent(Stream stream, int contentLength)
         {
             int bytesProcessed = 0;
 
@@ -202,7 +202,7 @@ namespace MJPEG
             return res;
         }
 
-        private bool CheckRawImage(byte[] rawImage)
+        internal bool CheckRawImage(byte[] rawImage)
         {
             if (rawImage[0] == 0xFF && rawImage[1] == 0xD8 && rawImage[rawImage.Length - 2] == 0xFF && rawImage[rawImage.Length - 1] == 0xD9)
             {
