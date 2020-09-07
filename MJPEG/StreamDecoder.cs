@@ -52,12 +52,6 @@ namespace MJPEG
         {
             while (true)
             {
-                if (_uri == null)
-                {
-                    await Task.Delay(1000);
-                    continue;
-                }
-
                 try
                 {
                     using (var stream = await _client.GetStreamAsync(_uri).ConfigureAwait(false))
@@ -76,15 +70,15 @@ namespace MJPEG
 
                             // valid frame received
 
-                            lock (_locker)
-                            {
-                                _lastFrame = content;
-                            }
-
                             if (_updateUri)
                             {
                                 _updateUri = false;
                                 break;
+                            }
+
+                            lock (_locker)
+                            {
+                                _lastFrame = content;
                             }
 
                             OnFrameReceived?.Invoke(this, new FrameReceivedEventArgs()
