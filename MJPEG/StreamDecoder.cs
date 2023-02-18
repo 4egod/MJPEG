@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MJPEG
@@ -18,14 +19,16 @@ namespace MJPEG
         private object _locker = new object();
 
         private bool _updateUri;
+        private CancellationToken _token;
 
         public StreamDecoder()
         {
             _client = new HttpClient();
         }
 
-        public void StartDecodingAsync(string uri)
+        public void StartDecodingAsync(string uri, CancellationToken token)
         {
+            _token = token ;
             if (_uri == null)
             {
                 _uri = uri;
@@ -50,19 +53,19 @@ namespace MJPEG
 
         private async Task DoWork()
         {
-            while (true)
+            while (!_token.IsCancellationRequested)
             {
                 try
                 {
                     using (var stream = await _client.GetStreamAsync(_uri).ConfigureAwait(false))
                     {
-                        while (true)
+                        while (!_token.IsCancellationRequested)
                         {
                             int contentLength = GetContentLength(stream);
 
                             if (contentLength == 0) break;
 
-                            var content = GetContent(stream, contentLength);
+                            var content = await GetContent(stream, contentLength);
 
                             if (content == null) break;
 
@@ -184,7 +187,7 @@ namespace MJPEG
             return res;
         }
 
-        internal byte[] GetContent(Stream stream, int contentLength)
+        internal async Task<byte[]> GetContent(Stream stream, int contentLength)
         {
             int bytesProcessed = 0;
 
@@ -192,8 +195,9 @@ namespace MJPEG
 
             while (bytesProcessed != contentLength)
             {
-                int bytesReceived = stream.Read(res, bytesProcessed, contentLength - bytesProcessed);
+                var bytesReceived = await stream.ReadAsync(res, bytesProcessed, contentLength - bytesProcessed, _token);
 
+                if (_token.IsCancellationRequested) return null;
                 if (bytesReceived == 0) return null;
 
                 bytesProcessed += bytesReceived;

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace SimplePlayerIoC
 {
@@ -16,6 +17,6 @@ namespace SimplePlayerIoC
 
         public byte[] GetLastFrame() => _decoder.GetLastFrame();
 
-        public void StartDecoding() => _decoder.StartDecodingAsync("http://83.128.74.78:8083/mjpg/video.mjpg");
+        public void StartDecoding(CancellationToken token) => _decoder.StartDecodingAsync("http://83.128.74.78:8083/mjpg/video.mjpg",token);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace SimplePlayerIoC
 {
@@ -8,6 +9,6 @@ namespace SimplePlayerIoC
     {
         byte[] GetLastFrame();
 
-        void StartDecoding();
+        void StartDecoding(CancellationToken token);
     }
 }

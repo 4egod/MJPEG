@@ -54,7 +54,7 @@ namespace SimplePlayerIoC
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
-            _simpleService.StartDecoding();
+            _simpleService.StartDecoding(default);
 
             startButton.Visibility = Visibility.Hidden;
         }

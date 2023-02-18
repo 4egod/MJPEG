@@ -26,7 +26,7 @@ namespace SimplePlayer
         private BackgroundWorker _worker = new BackgroundWorker();
 
         private StreamDecoder _decoder = new StreamDecoder();
-        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -34,7 +34,7 @@ namespace SimplePlayer
 
         private void Window_Initialized(object sender, EventArgs e)
         {
-            _decoder.StartDecodingAsync("http://83.128.74.78:8083/mjpg/video.mjpg");
+            _decoder.StartDecodingAsync("http://83.128.74.78:8083/mjpg/video.mjpg", default);
             _decoder.OnFrameReceived += _decoder_OnFrameReceived;
 
             // Not used anymore

@@ -42,7 +42,7 @@ namespace AxisPlayer.ViewModels
             Debug.WriteLine($"Update source: {uri}");
 
             Frame = null;
-            _decoder.StartDecodingAsync(uri);
+            _decoder.StartDecodingAsync(uri, default);
         }
     }
 }

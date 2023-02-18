@@ -32,7 +32,7 @@ namespace AxisPlayer.ViewModels.Tests
             SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
 
             var decoderStub = new Mock<IStreamDecoder>();
-            decoderStub.Setup(x => x.StartDecodingAsync(It.IsAny<string>()));
+            decoderStub.Setup(x => x.StartDecodingAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()));
                 //.Callback((string x) => Debug.Print($"---->{x}"));
 
             Locator.CurrentMutable.Register(() => decoderStub.Object); 
