@@ -22,7 +22,7 @@ namespace AxisPlayer.ViewModels.Tests
             string actual = null;
 
             var stub = new Mock<IStreamDecoder>();
-            stub.Setup(x => x.StartDecodingAsync(It.IsAny<string>()))
+            stub.Setup(x => x.StartDecodingAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .Callback((string x) => actual = x);
 
             PlayerViewModel vm = new PlayerViewModel(stub.Object);

@@ -22,11 +22,13 @@ namespace FrameSaver
             }
 
             var decoder = new StreamDecoder();
-        
-            decoder.OnFrameReceived += Decoder_OnFrameReceived; 
-            decoder.StartDecodingAsync("http://83.128.74.78:8083/mjpg/video.mjpg");
 
-            Console.ReadLine();
+            var tokenSource = new CancellationTokenSource();
+            tokenSource.CancelAfter(5000);
+            decoder.OnFrameReceived += Decoder_OnFrameReceived;
+            decoder.StartDecodingAsync("http://83.128.74.78:8083/mjpg/video.mjpg", tokenSource.Token);
+
+            while (!tokenSource.Token.IsCancellationRequested) { }
 
             //while (true)
             //{

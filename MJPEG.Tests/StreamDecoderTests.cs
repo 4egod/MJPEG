@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MJPEG.Tests
 {
@@ -56,13 +57,13 @@ namespace MJPEG.Tests
         }
 
         [TestMethod]
-        public void GetContentTest()
+        public async Task GetContentTest()
         {
             byte[] buf = new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
             using MemoryStream ms = new MemoryStream(buf);
 
-            byte[] act = _decoder.GetContent(ms, 3);
+            byte[] act = await _decoder.GetContent(ms, 3);
 
             Assert.IsNotNull(act);
             Assert.AreEqual(3, act.Length);
